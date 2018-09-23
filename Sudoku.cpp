@@ -19,17 +19,17 @@ void MostrarMatriz(Celda Matriz[][9]){
 		}
 		cout<<endl;
 	}
-	//for(int k=0;k<9;k++){
-		cout<<"Matriz de Disponibilidad del número "<<endl;
-	//cout<<endl;
+	/*for(int k=0;k<9;k++){
+		cout<<"Matriz de Disponibilidad del número "<<k+1<<endl;
+	cout<<endl;
 		for(int i=0;i<9;i++){
 			for(int j=0;j<9;j++){
-				cout<<Matriz[i][j].Disp[1]<<" ";
+				cout<<Matriz[i][j].Disp[k]<<" ";
 			}
 			cout<<endl;
 		}
-		//cout<<endl;
-	//}*/
+		cout<<endl;
+	}*/
 	
 }
 
@@ -199,7 +199,7 @@ int LlenarBloque(int SubMatriz,int NumeroBuscado,Celda Matriz[][9]){
 int RevisionFila(int coordi, int NumeroBuscado,Celda Matriz[][9]){
 	int cont=0, jaux=0,bloqueaux=0,cont2=0;
 	for(int j=0;j<9;j++){
-		if(Matriz[coordi][j].Valor != NumeroBuscado && Matriz[coordi][j].Disp[NumeroBuscado-1] == 0 && Matriz[coordi][j].Valor >0){ //se salta su propia celda y busca entre los no disponibles
+		if(Matriz[coordi][j].Valor != NumeroBuscado && Matriz[coordi][j].Disp[NumeroBuscado-1] == 0){ //se salta su propia celda y busca entre los no disponibles
 			cont++;
 		}else{
 			jaux = j;
@@ -230,7 +230,7 @@ int RevisionFila(int coordi, int NumeroBuscado,Celda Matriz[][9]){
 int RevisionColumna(int coordj, int NumeroBuscado,Celda Matriz[][9]){
 	int cont=0, iaux=0,bloqueaux=0,cont2=0;
 	for(int i=0;i<9;i++){
-		if(Matriz[i][coordj].Valor != NumeroBuscado && Matriz[i][coordj].Disp[NumeroBuscado-1] == 0 && Matriz[i][coordj].Valor >0){ //se salta su propia celda y busca entre los no disponibles
+		if(Matriz[i][coordj].Valor != NumeroBuscado && Matriz[i][coordj].Disp[NumeroBuscado-1] == 0){ //se salta su propia celda y busca entre los no disponibles
 			cont++;
 		}else{
 			iaux = i;
@@ -327,54 +327,53 @@ int RevisarCelda(int coordi,int coordj,int NumeroBuscado,Celda Matriz[][9]){
 void Revisar(Celda Matriz[][9], int NumeroBuscado){
 	bool var = true;
 	while(var){
-	int b=0,f=0,c=0,lb=0,n=0,b2=0,f2=0,c2=0,lb2=0,cont=0,celda=0,celda2=0;
+	int b=0;
 
 		for(int l=0;l<9;l++){
-			lb = LlenarBloque(l+1,NumeroBuscado,Matriz);
-			if(lb==1){
-				lb2 = 1;
+			b = LlenarBloque(l+1,NumeroBuscado,Matriz);
+			if(b==1){
+				b = 1;
 			}
 		}
 		for(int i=0;i<9;i++){
 			b = RevisionBloque(i+1,NumeroBuscado,Matriz);		
 			if(b==1){
-				b2 = 1;
+				b = 1;
 			}
 		}
 		for(int i=0;i<9;i++){
 			for(int j=0;j<9;j++){
-				celda = RevisarCelda(i,j,NumeroBuscado,Matriz);
-				if(celda == 1){
-					celda2=1;
+				b = RevisarCelda(i,j,NumeroBuscado,Matriz);
+				if(b == 1){
+					b=1;
 				}
 			}
 		}
 		for(int i=0;i<9;i++){
-			f = RevisionFila(i,NumeroBuscado,Matriz);	
-			if(f==1){
-				f2 = 1;
+			b = RevisionFila(i,NumeroBuscado,Matriz);	
+			if(b==1){
+				b = 1;
 			}	
 		}
 		for(int i=0;i<9;i++){
-			c = RevisionColumna(i,NumeroBuscado,Matriz);	
-			if(c==1){
-				c2 = 1;
+			b = RevisionColumna(i,NumeroBuscado,Matriz);	
+			if(b==1){
+				b = 1;
 			}	
 		}
 		for(int m=0;m<9;m++){
-			lb = LlenarBloque(m+1,NumeroBuscado,Matriz);
-			if(lb==1){
-				lb2 = 1;
+			b = LlenarBloque(m+1,NumeroBuscado,Matriz);
+			if(b==1){
+				b = 1;
 			}
 		}
 
 		//While itera hasta que no haya habido cambio en ninguna de las funciones, eso significa que debe esperar
 		//a que la matriz se actualice con los datos de los otros números
 		
-		if(b2 == 0 && f2 == 0 && c2 == 0 && lb2 == 0 && celda2==0){
+		if(b == 0){
 			var = false;
 		}
-		n++;
 	}
 	
 	
